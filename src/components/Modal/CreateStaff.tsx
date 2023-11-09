@@ -12,7 +12,7 @@ export interface Staff {
   isStaff: boolean
   isAdmin: boolean
 }
-const CreateStaff = ({ data, isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+const CreateStaff = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   const modalRef = useRef<HTMLDivElement>(null)
 
   const handleModalClick = (e: React.MouseEvent) => {
