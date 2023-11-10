@@ -13,6 +13,8 @@ import Categories from './pages/Category'
 import Oders from './pages/Order'
 import Messages from './pages/Message'
 import Brand from './pages/Brand'
+import Payment from './pages/Payment'
+import Custommer from './pages/Custommer'
 
 function ProtecedRoute() {
   const { isAuthenticated } = React.useContext(AppContext)
@@ -77,6 +79,14 @@ const useRouteElements = () => {
           )
         },
         {
+          path: '/custommer',
+          element: (
+            <AdminLayout title='Danh sách khách hàng'>
+              <Custommer />
+            </AdminLayout>
+          )
+        },
+        {
           path: '/product',
           element: (
             <AdminLayout title='Danh sách sản phẩm'>
@@ -115,7 +125,16 @@ const useRouteElements = () => {
               <Messages />
             </AdminLayout>
           )
-        }
+        },
+        {
+          path: '/payment',
+          element: (
+            <AdminLayout title='Ngân hàng dùng để thanh toán'>
+              <Payment />
+            </AdminLayout>
+          )
+        },
+
       ]
     }
   ])

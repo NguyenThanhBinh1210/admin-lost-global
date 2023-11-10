@@ -67,12 +67,6 @@ const Oders = () => {
       <div className='flex justify-between mb-3 mobile:flex-col tablet:flex-col'>
         <div className='mb-2 flex items-center'>
           <span className='my-4 font-bold dark:text-white'>Số lượng đơn hàng: {count.count || 0}</span>
-          {/* <button
-            onClick={() => setModalOpenCreate(true)}
-            className='disabled:bg-opacity-70 ml-4 h-[40px] w-max text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-2xl text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-          >
-            Tạo sản phẩm
-          </button> */}
         </div>
         <div className='w-[50%] mobile:w-full'>
           <form onSubmit={(e) => handleSearch(e)}>

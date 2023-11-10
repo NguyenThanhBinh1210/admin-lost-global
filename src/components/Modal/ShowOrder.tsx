@@ -12,6 +12,7 @@ const ShowOrder = ({ isOpen, onClose, data }: any) => {
     Sum: 0,
     complete: '',
     email: '',
+    address: "",
     isPayment: false,
     mota: '',
     name: '',
@@ -44,9 +45,8 @@ const ShowOrder = ({ isOpen, onClose, data }: any) => {
       tabIndex={-1}
       aria-hidden='true'
       onClick={handleModalClick}
-      className={` ${
-        isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-      } fixed bg-[#02020246] dark:bg-[#ffffff46] top-0 left-0 right-0 z-50 w-[100vw] p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[100vh] transition-all`}
+      className={` ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        } fixed bg-[#02020246] dark:bg-[#ffffff46] top-0 left-0 right-0 z-50 w-[100vw] p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[100vh] transition-all`}
     >
       <div
         ref={modalRef}
@@ -147,40 +147,19 @@ const ShowOrder = ({ isOpen, onClose, data }: any) => {
                     />
                   </div>
                 </div>
-                <label htmlFor='xa' className='block text-sm font-medium text-gray-900 dark:text-white'>
-                  Địa chỉ
-                </label>
-                <div className='grid grid-cols-3 gap-x-4 mobile:gap-y-4' style={{ marginTop: 10 }}>
-                  <div className='mobile:col-span-3'>
-                    <input
-                      type='text'
-                      name='xa'
-                      id='xa'
-                      className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                      placeholder='Số lượng'
-                      value={formState?.xa !== '' ? formState?.xa : data?.xa}
-                    />
-                  </div>
-                  <div className='mobile:col-span-3'>
-                    <input
-                      type='text'
-                      name='quan'
-                      id='quan'
-                      className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                      placeholder='Số lượng'
-                      value={formState?.quan !== '' ? formState?.quan : data?.quan}
-                    />
-                  </div>
-                  <div className='mobile:col-span-3'>
-                    <input
-                      type='text'
-                      name='tinh'
-                      id='tinh'
-                      className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                      placeholder='Số lượng'
-                      value={formState?.tinh !== '' ? formState?.tinh : data?.tinh}
-                    />
-                  </div>
+
+                <div>
+                  <label htmlFor='address' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
+                    Địa chỉ
+                  </label>
+                  <textarea
+                    disabled
+                    name='address'
+                    id='address'
+                    className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+                    placeholder='Địa chỉ'
+                    value={formState?.address !== '' ? formState?.address : data?.address}
+                  />
                 </div>
                 <div>
                   <label htmlFor='description' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
@@ -191,7 +170,7 @@ const ShowOrder = ({ isOpen, onClose, data }: any) => {
                     name='description'
                     id='description'
                     className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                    placeholder='Số lượng'
+                    placeholder='Mô tả'
                     value={formState?.mota !== '' ? formState?.mota : data?.mota}
                   />
                 </div>
