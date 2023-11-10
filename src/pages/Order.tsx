@@ -140,6 +140,9 @@ const Oders = () => {
                       Ghi chú
                     </th>
                     <th scope='col' className='px-6 py-3'>
+                      Địa chỉ
+                    </th>
+                    <th scope='col' className='px-6 py-3'>
                       Hành động
                     </th>
                   </tr>
@@ -193,6 +196,12 @@ const Oders = () => {
                             className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
                           >
                             {item.note}
+                          </th>
+                          <th
+                            scope='row'
+                            className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+                          >
+                            {item.address}
                           </th>
                           <th
                             scope='row'
