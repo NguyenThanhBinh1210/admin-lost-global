@@ -11,7 +11,7 @@ import SearchHeader from '~/components/Search/Search'
 import usePagination from '~/hooks/usePagination'
 const Comment = () => {
   const [data, setData] = useState<any>([])
-  console.log(data);
+  console.log(data)
   const [showComment, setShowComment] = useState(null)
   const [isModalOpen, setModalOpen] = useState(false)
 
@@ -134,8 +134,7 @@ const Comment = () => {
                             className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
                           >
                             <div className='w-14 h-14 overflow-hidden rounded-full'>
-
-                              <img src={item?.product.image[0]} alt="" />
+                              <img src={item?.product.image[0]} alt='' />
                             </div>
                           </th>
                           <th
@@ -198,7 +197,6 @@ const Comment = () => {
               </table>
             </div>
             <Paginate totalPages={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />
-
           </>
         )}
       </div>

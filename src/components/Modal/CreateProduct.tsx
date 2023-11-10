@@ -64,14 +64,14 @@ const CreateProduct = ({ isOpen, onClose, data }: any) => {
   })
   const handleChange =
     (name: string) =>
-      (
-        event:
-          | React.ChangeEvent<HTMLInputElement>
-          | React.ChangeEvent<HTMLTextAreaElement>
-          | React.ChangeEvent<HTMLSelectElement>
-      ) => {
-        setFormState((prev) => ({ ...prev, [name]: event.target.value }))
-      }
+    (
+      event:
+        | React.ChangeEvent<HTMLInputElement>
+        | React.ChangeEvent<HTMLTextAreaElement>
+        | React.ChangeEvent<HTMLSelectElement>
+    ) => {
+      setFormState((prev) => ({ ...prev, [name]: event.target.value }))
+    }
 
   const handleAvatar = (e: any) => {
     const file = e.target.files[0]
@@ -104,8 +104,9 @@ const CreateProduct = ({ isOpen, onClose, data }: any) => {
       tabIndex={-1}
       aria-hidden='true'
       onClick={handleModalClick}
-      className={` ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        } fixed bg-[#02020246] dark:bg-[#ffffff46] top-0 left-0 right-0 z-50 w-[100vw] p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[100vh] transition-all`}
+      className={` ${
+        isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+      } fixed bg-[#02020246] dark:bg-[#ffffff46] top-0 left-0 right-0 z-50 w-[100vw] p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[100vh] transition-all`}
     >
       <div
         ref={modalRef}

@@ -13,7 +13,7 @@ import usePagination from '~/hooks/usePagination'
 
 const Custommer = () => {
   const [staff, setStaff] = useState<any>([])
-  console.log(staff);
+  console.log(staff)
   const [search, setSearch] = useState<string>('')
   const { currentPage, totalPages, currentData, setCurrentPage } = usePagination(8, staff)
   const [showComment, setShowComment] = useState()
@@ -149,7 +149,7 @@ const Custommer = () => {
                           Name
                         </th>
                         <th scope='col' className='px-6 py-3'>
-                          User Name
+                          Mã giới thiệu
                         </th>
                         <th scope='col' className='px-6 py-3'>
                           Hành động
@@ -217,7 +217,7 @@ const Custommer = () => {
                                 scope='row'
                                 className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
                               >
-                                {item.username}
+                                {item.idUser}
                               </th>
                               <th
                                 scope='row'

@@ -25,8 +25,9 @@ const CommonTable = ({ data, columns, handleDelete, showModal, showData }: any) 
                 {columns.slice(0, 6).map((column: any, index: number) => (
                   <td
                     key={index}
-                    className={`${index === 0 ? 'w-[100px] ' : ''
-                      }px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white`}
+                    className={`${
+                      index === 0 ? 'w-[100px] ' : ''
+                    }px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white`}
                   >
                     {column === 'stt' ? (
                       `#${idx + 1}`

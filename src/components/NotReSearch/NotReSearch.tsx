@@ -30,7 +30,6 @@ const NotReSearch = ({ handleReset }: any) => {
           <div className='ml-3 text-sm font-normal'>
             <span className='mb-1 text-sm font-semibold text-gray-900 dark:text-white'>Không có kết quả</span>
             <div className='mb-2 text-sm font-normal'>Không có kết quả tìm kiếm nào khớp với yêu cầu.</div>
-
           </div>
           <button
             onClick={handleReset}

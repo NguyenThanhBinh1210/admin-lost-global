@@ -1,4 +1,3 @@
-
 const SearchHeader = ({ count, handleSearch, hanldeOpenModal, title, search, setSearch }: any) => {
   return (
     <div className='flex justify-between mb-3 mobile:flex-col tablet:flex-col'>

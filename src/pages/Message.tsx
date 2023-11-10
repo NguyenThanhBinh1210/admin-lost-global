@@ -143,7 +143,6 @@ const Messages = () => {
               </table>
             </div>
             <Paginate totalPages={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />
-
           </>
         )}
       </div>

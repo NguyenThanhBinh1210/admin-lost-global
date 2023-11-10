@@ -142,8 +142,7 @@ const useRouteElements = () => {
               <PaymentHistory />
             </AdminLayout>
           )
-        },
-
+        }
       ]
     }
   ])

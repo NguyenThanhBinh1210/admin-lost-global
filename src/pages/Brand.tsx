@@ -16,7 +16,7 @@ const Brand = () => {
   const [staff, setStaff] = useState<any>([])
   const [search, setSearch] = useState<string>('')
   const { currentPage, totalPages, currentData, setCurrentPage } = usePagination(8, staff)
-  console.log(staff);
+  console.log(staff)
   const [showBrand, setShowBrand] = useState<any | null>(null)
   const [isModalOpen, setModalOpen] = useState(false)
   const [isModalOpenCreate, setModalOpenCreate] = useState(false)
@@ -84,7 +84,6 @@ const Brand = () => {
           <Loading />
         ) : (
           <>
-
             <CommonTable
               data={staff}
               columns={['stt', 'nameBrand']}

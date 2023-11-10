@@ -15,8 +15,9 @@ const CreateModal = ({ isOpen, onClose, data }: any) => {
       tabIndex={-1}
       aria-hidden='true'
       onClick={handleModalClick}
-      className={` ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        } fixed bg-[#02020246] dark:bg-[#ffffff46] top-0 left-0 right-0 z-50 w-[100vw] p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[100vh] transition-all`}
+      className={` ${
+        isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+      } fixed bg-[#02020246] dark:bg-[#ffffff46] top-0 left-0 right-0 z-50 w-[100vw] p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[100vh] transition-all`}
     >
       <div
         ref={modalRef}
@@ -60,7 +61,6 @@ const CreateModal = ({ isOpen, onClose, data }: any) => {
                 >
                   {data?.product.title}
                 </div>
-
               </div>
               <div>
                 <label htmlFor='name' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
@@ -96,7 +96,9 @@ const CreateModal = ({ isOpen, onClose, data }: any) => {
                 <div
                   className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                   placeholder='Không ghi địa chỉ'
-                >{data?.rating + " sao"}</div>
+                >
+                  {data?.rating + ' sao'}
+                </div>
               </div>
               <div>
                 <label htmlFor='default-search' className=' text-sm font-medium text-gray-900  dark:text-white'>

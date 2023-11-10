@@ -70,14 +70,14 @@ const ShowProduct = ({ isOpen, onClose, data }: any) => {
   })
   const handleChange =
     (name: string) =>
-      (
-        event:
-          | React.ChangeEvent<HTMLInputElement>
-          | React.ChangeEvent<HTMLTextAreaElement>
-          | React.ChangeEvent<HTMLSelectElement>
-      ) => {
-        setFormState((prev) => ({ ...prev, [name]: event.target.value }))
-      }
+    (
+      event:
+        | React.ChangeEvent<HTMLInputElement>
+        | React.ChangeEvent<HTMLTextAreaElement>
+        | React.ChangeEvent<HTMLSelectElement>
+    ) => {
+      setFormState((prev) => ({ ...prev, [name]: event.target.value }))
+    }
 
   const handleAvatar = (e: any) => {
     const formData: any = new FormData()
@@ -117,8 +117,9 @@ const ShowProduct = ({ isOpen, onClose, data }: any) => {
       tabIndex={-1}
       aria-hidden='true'
       onClick={handleModalClick}
-      className={` ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        } fixed bg-[#02020246] dark:bg-[#ffffff46] top-0 left-0 right-0 z-50 w-[100vw] p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[100vh] transition-all`}
+      className={` ${
+        isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+      } fixed bg-[#02020246] dark:bg-[#ffffff46] top-0 left-0 right-0 z-50 w-[100vw] p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[100vh] transition-all`}
     >
       <div
         ref={modalRef}
@@ -300,7 +301,6 @@ const ShowProduct = ({ isOpen, onClose, data }: any) => {
                 </div>
               </div>
               <div className='grid grid-cols-2 gap-x-4'>
-
                 <div>
                   <label htmlFor='wording' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
                     Wording
@@ -311,7 +311,7 @@ const ShowProduct = ({ isOpen, onClose, data }: any) => {
                     id='wording'
                     className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                     placeholder='Wording'
-                    value={formState?.wording !== "" ? formState?.wording : data?.wording}
+                    value={formState?.wording !== '' ? formState?.wording : data?.wording}
                     onChange={handleChange('wording')}
                   />
                 </div>

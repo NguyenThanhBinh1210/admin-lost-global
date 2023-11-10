@@ -12,7 +12,7 @@ import usePagination from '~/hooks/usePagination'
 
 const Categories = () => {
   const [staff, setStaff] = useState<any>([])
-  console.log(staff);
+  console.log(staff)
   const [search, setSearch] = useState<string>('')
   const { currentPage, totalPages, currentData, setCurrentPage } = usePagination(8, staff)
 
@@ -83,7 +83,6 @@ const Categories = () => {
           <Loading />
         ) : (
           <>
-
             <CommonTable
               data={staff}
               columns={['stt', 'nameCategory']}

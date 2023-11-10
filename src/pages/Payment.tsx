@@ -10,7 +10,7 @@ const Payment = () => {
 
   // const { profile } = useContext(AppContext)
   const [data, setData] = useState<any>([])
-  console.log(data);
+  console.log(data)
   const [showComment, setShowComment] = useState<any | null>(null)
   const [isModalOpen, setModalOpen] = useState(false)
   const [isModalOpenCreate, setModalOpenCreate] = useState(false)
@@ -229,8 +229,6 @@ const Payment = () => {
                   )}
                 </table>
               </div>
-
-
             </div>
             <nav aria-label='Page navigation example' className='mx-auto'>
               <ul className='flex items-center -space-x-px h-10 text-base'>
