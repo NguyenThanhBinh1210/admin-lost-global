@@ -122,6 +122,9 @@ const Oders = () => {
                       STT
                     </th>
                     <th scope='col' className='px-6 py-3'>
+                      Mã đơn
+                    </th>
+                    <th scope='col' className='px-6 py-3'>
                       Name
                     </th>
                     <th scope='col' className='px-6 py-3'>
@@ -154,6 +157,12 @@ const Oders = () => {
                             className='w-[100px] px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
                           >
                             {'#' + (idx + 1)}
+                          </th>
+                          <th
+                            scope='row'
+                            className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+                          >
+                            {item.code}
                           </th>
                           <th
                             scope='row'

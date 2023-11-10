@@ -10,6 +10,7 @@ const Payment = () => {
 
   // const { profile } = useContext(AppContext)
   const [data, setData] = useState<any>([])
+  console.log(data);
   const [showComment, setShowComment] = useState<any | null>(null)
   const [isModalOpen, setModalOpen] = useState(false)
   const [isModalOpenCreate, setModalOpenCreate] = useState(false)
@@ -73,13 +74,13 @@ const Payment = () => {
     <>
       <div className='flex justify-between mb-3 mobile:flex-col tablet:flex-col'>
         <div className='mb-2 flex items-center'>
-          <span className='my-4 font-bold dark:text-white'>Số lượng liên hệ: {dataConfig?.payments.length || 0}</span>
-          <button
+          <span className='my-4 font-bold dark:text-white'>Số lượng tài khoản: {dataConfig?.payments.length || 0}</span>
+          {/* <button
             onClick={() => setModalOpenCreate(true)}
             className='disabled:bg-opacity-70 ml-4 h-[40px] w-max text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-2xl text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
           >
             Tạo tài khoản ngân hàng thanh toán
-          </button>
+          </button> */}
         </div>
         <div className='w-[50%] mobile:w-full'>
           <form onSubmit={(e) => handleSearch(e)}>
@@ -145,7 +146,7 @@ const Payment = () => {
           </div>
         ) : (
           <>
-            <div className='grid grid-cols-2 min-h-[450px] gap-x-5'>
+            <div className='grid grid-cols-1 min-h-[450px] gap-x-5'>
               <div className='relative flex-1 overflow-x-auto rounded-md shadow-md sm:rounded-lg'>
                 <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
                   <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
@@ -155,6 +156,9 @@ const Payment = () => {
                       </th>
                       <th scope='col' className='px-6 py-3'>
                         Tên ngân hàng
+                      </th>
+                      <th scope='col' className='px-6 py-3'>
+                        Tên chủ
                       </th>
                       <th scope='col' className='px-6 py-3'>
                         Số tài khoản
@@ -188,6 +192,12 @@ const Payment = () => {
                               scope='row'
                               className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
                             >
+                              {item?.nameUserBank}
+                            </th>
+                            <th
+                              scope='row'
+                              className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+                            >
                               {item?.accountNumber}
                             </th>
                             <th
@@ -219,79 +229,7 @@ const Payment = () => {
                   )}
                 </table>
               </div>
-              <div className='relative flex-1 overflow-x-auto rounded-md shadow-md sm:rounded-lg'>
-                <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
-                  <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
-                    <tr>
-                      <th scope='col' className='px-6 py-3'>
-                        STT
-                      </th>
-                      <th scope='col' className='px-6 py-3'>
-                        Mã đơn
-                      </th>
-                      <th scope='col' className='px-6 py-3'>
-                        Tổng thu
-                      </th>
-                      <th scope='col' className='px-6 py-3'>
-                        Hành động
-                      </th>
-                    </tr>
-                  </thead>
-                  {currentData?.length !== 0 && (
-                    <tbody>
-                      {currentData?.map((item: any, idx: number) => {
-                        return (
-                          <tr
-                            key={item._id}
-                            className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'
-                          >
-                            <th
-                              scope='row'
-                              className='w-[100px] px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
-                            >
-                              {'#' + (idx + 1)}
-                            </th>
-                            <th
-                              scope='row'
-                              className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
-                            >
-                              {item?.bankName}
-                            </th>
-                            <th
-                              scope='row'
-                              className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
-                            >
-                              {item?.accountNumber}
-                            </th>
-                            <th
-                              scope='row'
-                              className='px-6 py-3 w-[200px] flex items-center gap-x-2 font-medium text-gray-900 whitespace-nowrap dark:text-white'
-                            >
-                              {/* <button
-                                type='button'
-                                onClick={() => {
-                                  setShowComment(item)
-                                  setModalOpen(true)
-                                }}
-                                className='text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-2 py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900'
-                              >
-                                Xem
-                              </button>
-                              <button
-                                type='button'
-                                onClick={() => handleDelete(item._id)}
-                                className='text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-2 py-1 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
-                              >
-                                Xoá
-                              </button> */}
-                            </th>
-                          </tr>
-                        )
-                      })}
-                    </tbody>
-                  )}
-                </table>
-              </div>
+
 
             </div>
             <nav aria-label='Page navigation example' className='mx-auto'>

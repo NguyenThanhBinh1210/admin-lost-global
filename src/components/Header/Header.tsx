@@ -1,8 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react'
-import { useMutation } from 'react-query'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { logout } from '~/apis/auth.api'
 import { AppContext } from '~/contexts/app.context'
 import useDarkMode from '~/hooks/useDarkMode'
 import { clearLS } from '~/utils/auth'
@@ -10,7 +8,6 @@ import { clearLS } from '~/utils/auth'
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
   const { profile, reset } = useContext(AppContext)
-  console.log(profile);
   const navigate = useNavigate()
   const handleLogout = () => {
     reset()
@@ -32,7 +29,7 @@ const Header = () => {
       ref={modalRef}
       id='drawer-navigation'
       className={`${showMenu ? 'mobile:translate-x-[0] ' : 'mobile:translate-x-[-100%] '
-        } dark:bg-gray-700 mobile:fixed non-scroll dark:border-none border-r border-gray-300 top-0 relative left-0 z-40 h-screen p-4  transition-all  bg-white w-60 mobile:w-[240px]`}
+        } dark:bg-gray-700 mobile:fixed non-scroll dark:border-none border-r border-gray-300 top-0 sticky left-0 z-40 h-screen p-4  transition-all  bg-white w-60 mobile:w-[240px]`}
       tabIndex={-1}
       aria-labelledby='drawer-navigation-label'
     >
@@ -136,6 +133,14 @@ const Header = () => {
           </li>
           {profile?.isAdmin && (
             <>
+              <li>
+                <Link
+                  to='/payment-history'
+                  className='flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg pl-4 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
+                >
+                  <button>Lịch sử</button>
+                </Link>
+              </li>
               <li>
                 <Link
                   to='/user'

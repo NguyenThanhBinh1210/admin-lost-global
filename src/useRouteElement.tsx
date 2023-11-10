@@ -15,6 +15,7 @@ import Messages from './pages/Message'
 import Brand from './pages/Brand'
 import Payment from './pages/Payment'
 import Custommer from './pages/Custommer'
+import PaymentHistory from './pages/PaymentHistory'
 
 function ProtecedRoute() {
   const { isAuthenticated } = React.useContext(AppContext)
@@ -131,6 +132,14 @@ const useRouteElements = () => {
           element: (
             <AdminLayout title='Ngân hàng dùng để thanh toán'>
               <Payment />
+            </AdminLayout>
+          )
+        },
+        {
+          path: '/payment-history',
+          element: (
+            <AdminLayout title='Lịch sử giao dịch'>
+              <PaymentHistory />
             </AdminLayout>
           )
         },

@@ -23,7 +23,6 @@ const CreatePayment = ({ isOpen, onClose, data }: any) => {
     bankName: '',
     accountNumber: ''
   }
-  console.log('daa', data)
   const queryClient = useQueryClient()
   const mutation = useMutation((body: any) => {
     return createPayment(body)
@@ -66,7 +65,6 @@ const CreatePayment = ({ isOpen, onClose, data }: any) => {
       })
     }
   }
-  console.log('active', formState)
   return (
     <div
       id='authentication-modal'
