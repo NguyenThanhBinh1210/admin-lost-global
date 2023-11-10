@@ -186,7 +186,7 @@ const Oders = () => {
                             scope='row'
                             className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
                           >
-                            {FormatNumber(item.Sum)}đ
+                            ${FormatNumber(item.Sum)}
                           </th>
                           <th
                             scope='row'

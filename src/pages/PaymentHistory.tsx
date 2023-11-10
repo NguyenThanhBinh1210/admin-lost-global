@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import moment from 'moment'
 import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
@@ -11,6 +12,7 @@ const PaymentHistory = () => {
 
   // const { profile } = useContext(AppContext)
   const [data, setData] = useState<any>([])
+  console.log(data)
   const [showComment, setShowComment] = useState<any | null>(null)
   const [isModalOpen, setModalOpen] = useState(false)
   const [isModalOpenCreate, setModalOpenCreate] = useState(false)
@@ -36,7 +38,6 @@ const PaymentHistory = () => {
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
   const currentData = arrayWithInfoRechargeMoney?.slice(startIndex, endIndex)
-  console.log(currentData)
   const [currentPageWitdraw, setCurrentPageWitdraw] = useState(1)
   const totalPagesWitdraw = Math.ceil(arrayWithoutInfoRechargeMoney?.length / itemsPerPage)
   const startIndexWitdraw = (currentPageWitdraw - 1) * itemsPerPage
@@ -92,7 +93,7 @@ const PaymentHistory = () => {
       return AllHistory({})
     },
     onSuccess: (data) => {
-      setData(data.data.data)
+      setData(data.data)
     }
   })
   // console.log(currentData);
@@ -101,9 +102,7 @@ const PaymentHistory = () => {
     <>
       <div className='flex justify-between mb-3 mobile:flex-col tablet:flex-col'>
         <div className='mb-2 flex items-center'>
-          <span className='my-4 font-bold dark:text-white'>
-            Số lượng giao dịch: {dataConfig?.data.data.length || 0}
-          </span>
+          <span className='my-4 font-bold dark:text-white'>Số lượng giao dịch: {dataConfig?.data.length || 0}</span>
           {/* <button
             onClick={() => setModalOpenCreate(true)}
             className='disabled:bg-opacity-70 ml-4 h-[40px] w-max text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-2xl text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
@@ -183,17 +182,15 @@ const PaymentHistory = () => {
               <div className='flex gap-x-3 '>
                 <button
                   onClick={() => setType(0)}
-                  className={`w-[100px] cursor-pointer h-[40px] rounded-lg ${
-                    type === 0 ? ' bg-blue-600' : ' ring-1 ring-blue-600 text-black hover:bg-blue-600 hover:text-white '
-                  }  flex transition-all items-center justify-center text-white`}
+                  className={`w-[100px] cursor-pointer h-[40px] rounded-lg ${type === 0 ? ' bg-blue-600' : ' ring-1 ring-blue-600 text-black hover:bg-blue-600 hover:text-white '
+                    }  flex transition-all items-center justify-center text-white`}
                 >
                   Lịch sử nạp
                 </button>
                 <button
                   onClick={() => setType(1)}
-                  className={`w-[100px] cursor-pointer h-[40px] rounded-lg ${
-                    type === 1 ? ' bg-blue-600' : ' ring-1 ring-blue-600 text-black hover:bg-blue-600 hover:text-white '
-                  }  flex transition-all items-center justify-center text-white`}
+                  className={`w-[100px] cursor-pointer h-[40px] rounded-lg ${type === 1 ? ' bg-blue-600' : ' ring-1 ring-blue-600 text-black hover:bg-blue-600 hover:text-white '
+                    }  flex transition-all items-center justify-center text-white`}
                 >
                   Lịch sử rút
                 </button>
@@ -214,6 +211,12 @@ const PaymentHistory = () => {
                           </th>
                           <th scope='col' className='px-6 py-3'>
                             Tiền nạp
+                          </th>
+                          <th scope='col' className='px-6 py-3'>
+                            UserId
+                          </th>
+                          <th scope='col' className='px-6 py-3'>
+                            Email
                           </th>
                           <th scope='col' className='px-6 py-3'>
                             Status
@@ -256,10 +259,21 @@ const PaymentHistory = () => {
                                   scope='row'
                                   className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
                                 >
+                                  {item?.userId.idUser}
+                                </th>
+                                <th
+                                  scope='row'
+                                  className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+                                >
+                                  {item?.userId.email}
+                                </th>
+                                <th
+                                  scope='row'
+                                  className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+                                >
                                   <span
-                                    className={` ${
-                                      item?.status === 'pending' ? 'bg-yellow-500' : 'bg-green-500'
-                                    } text-white px-2 py-0.5 pb-1 text-xs rounded-md`}
+                                    className={` ${item?.status === 'pending' ? 'bg-yellow-500' : 'bg-green-500'
+                                      } text-white px-2 py-0.5 pb-1 text-xs rounded-md`}
                                   >
                                     {item?.status}
                                   </span>
@@ -372,6 +386,18 @@ const PaymentHistory = () => {
                             Tiền rút
                           </th>
                           <th scope='col' className='px-6 py-3'>
+                            UserId
+                          </th>
+                          <th scope='col' className='px-6 py-3'>
+                            Email
+                          </th>
+                          <th scope='col' className='px-6 py-3'>
+                            Số tài khoản
+                          </th>
+                          <th scope='col' className='px-6 py-3'>
+                            Tên ngân hàng
+                          </th>
+                          <th scope='col' className='px-6 py-3'>
                             Status
                           </th>
                           <th scope='col' className='px-6 py-3'>
@@ -412,10 +438,33 @@ const PaymentHistory = () => {
                                   scope='row'
                                   className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
                                 >
+                                  {item?.userId.idUser}
+                                </th>
+                                <th
+                                  scope='row'
+                                  className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+                                >
+                                  {item?.userId.email}
+                                </th>
+                                <th
+                                  scope='row'
+                                  className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+                                >
+                                  {item?.bankNumber}
+                                </th>
+                                <th
+                                  scope='row'
+                                  className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+                                >
+                                  {item?.bankName}
+                                </th>
+                                <th
+                                  scope='row'
+                                  className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+                                >
                                   <span
-                                    className={` ${
-                                      item?.status === 'pending' ? 'bg-yellow-500' : 'bg-green-500'
-                                    } text-white px-2 py-0.5 pb-1 text-xs rounded-md`}
+                                    className={` ${item?.status === 'pending' ? 'bg-yellow-500' : 'bg-green-500'
+                                      } text-white px-2 py-0.5 pb-1 text-xs rounded-md`}
                                   >
                                     {item?.status}
                                   </span>
