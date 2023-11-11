@@ -1,15 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
 import { updatePayment, createPayment } from '~/apis/payment.api'
-export interface Staff {
-  name: string
-  username: string
-  email: string
-  password: string
-  isStaff: boolean
-  isAdmin: boolean
-}
+import { objectToFormData } from '~/utils/utils'
+
 const CreatePayment = ({ isOpen, onClose, data }: any) => {
   const modalRef = useRef<HTMLDivElement>(null)
 
@@ -21,7 +16,9 @@ const CreatePayment = ({ isOpen, onClose, data }: any) => {
 
   const initialFromState = {
     bankName: '',
-    accountNumber: ''
+    bankNumber: '',
+    image: [],
+    bankUsername: ''
   }
   const queryClient = useQueryClient()
   const mutation = useMutation((body: any) => {
@@ -32,6 +29,7 @@ const CreatePayment = ({ isOpen, onClose, data }: any) => {
   })
   const [formState, setFormState] = useState(initialFromState)
   useEffect(() => {
+    setTempImage(data?.image[0])
     setFormState(data)
   }, [data])
   const handleChange = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,9 +38,10 @@ const CreatePayment = ({ isOpen, onClose, data }: any) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (data === null) {
-      mutation.mutate(formState, {
+      const newData = objectToFormData(formState)
+      mutation.mutate(newData, {
         onSuccess: () => {
-          queryClient.invalidateQueries('payments')
+          queryClient.invalidateQueries({ queryKey: ['payments', 1] })
           setFormState(initialFromState)
           toast.success('Thành công!')
           onClose()
@@ -52,9 +51,10 @@ const CreatePayment = ({ isOpen, onClose, data }: any) => {
         }
       })
     } else {
-      updateMutation.mutate(formState, {
+      const newData = objectToFormData(formState)
+      updateMutation.mutate(newData, {
         onSuccess: () => {
-          queryClient.invalidateQueries('payments')
+          queryClient.invalidateQueries({ queryKey: ['payments', 1] })
           setFormState(initialFromState)
           toast.success('Thành công!')
           onClose()
@@ -65,15 +65,24 @@ const CreatePayment = ({ isOpen, onClose, data }: any) => {
       })
     }
   }
+  const [tempImage, setTempImage] = useState<any>()
+  const handleAvatar = (e: any) => {
+    const file = e.target.files[0]
+    if (file) {
+      const newData = { ...formState, image: file }
+      setFormState(newData)
+      const imageURL = URL.createObjectURL(file)
+      setTempImage(imageURL)
+    }
+  }
   return (
     <div
       id='authentication-modal'
       tabIndex={-1}
       aria-hidden='true'
       onClick={handleModalClick}
-      className={` ${
-        isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-      } fixed bg-[#02020246] dark:bg-[#ffffff46] top-0 left-0 right-0 z-50 w-[100vw] p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[100vh] transition-all`}
+      className={` ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        } fixed bg-[#02020246] dark:bg-[#ffffff46] top-0 left-0 right-0 z-50 w-[100vw] p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[100vh] transition-all`}
     >
       <div
         ref={modalRef}
@@ -107,7 +116,49 @@ const CreatePayment = ({ isOpen, onClose, data }: any) => {
             <h3 className='mb-4 text-xl font-medium text-gray-900 dark:text-white'>
               {data !== null ? 'Sửa' : 'Tạo'} tài khoản thanh toán
             </h3>
+            {tempImage && (
+              <div className='relative mb-4 group w-[200px] h-[200px] mx-auto overflow-hidden rounded-full'>
+                <img src={tempImage} alt='avatar' />
+              </div>
+            )}
             <form className='space-y-6' action='#' autoComplete='false' onSubmit={(e) => handleSubmit(e)}>
+              <div className='flex items-center justify-center w-full'>
+                <label
+                  htmlFor='dropzone-file-2'
+                  className='flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600'
+                >
+                  <div className='flex flex-col items-center justify-center pt-5 pb-6'>
+                    <svg
+                      className='w-8 h-8 mb-4 text-gray-500 dark:text-gray-400'
+                      aria-hidden='true'
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 20 16'
+                    >
+                      <path
+                        stroke='currentColor'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2'
+                      />
+                    </svg>
+                    <p className='mb-2 text-sm text-gray-500 dark:text-gray-400'>
+                      <span className='font-semibold'>Click to change</span> or drag and drop
+                    </p>
+                    <p className='text-xs text-gray-500 dark:text-gray-400'>SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                  </div>
+                  <input
+                    id='dropzone-file-2'
+                    type='file'
+                    accept='image/*'
+                    className='hidden'
+                    onChange={(e) => {
+                      handleAvatar(e)
+                    }}
+                  />
+                </label>
+              </div>
               <div>
                 <label htmlFor='nameCategory' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
                   Tên ngân hàng
@@ -123,17 +174,31 @@ const CreatePayment = ({ isOpen, onClose, data }: any) => {
                 />
               </div>
               <div>
+                <label htmlFor='bankUsername' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
+                  Tên tài khoản
+                </label>
+                <input
+                  type='text'
+                  name='bankUsername'
+                  id='bankUsername'
+                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+                  placeholder='Tên'
+                  value={formState?.bankUsername || ''}
+                  onChange={handleChange('bankUsername')}
+                />
+              </div>
+              <div>
                 <label htmlFor='nameCategory' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
                   Số tài khoản
                 </label>
                 <input
                   type='text'
-                  name='accountNumber'
-                  id='accountNumber'
+                  name='bankNumber'
+                  id='bankNumber'
                   className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                   placeholder='Tên'
-                  value={formState?.accountNumber || ''}
-                  onChange={handleChange('accountNumber')}
+                  value={formState?.bankNumber || ''}
+                  onChange={handleChange('bankNumber')}
                 />
               </div>
 

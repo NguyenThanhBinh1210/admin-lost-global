@@ -149,6 +149,12 @@ const Custommer = () => {
                           Name
                         </th>
                         <th scope='col' className='px-6 py-3'>
+                          Tên ngân hàng
+                        </th>
+                        <th scope='col' className='px-6 py-3'>
+                          Số tài khoản
+                        </th>
+                        <th scope='col' className='px-6 py-3'>
                           Mã giới thiệu
                         </th>
                         <th scope='col' className='px-6 py-3'>
@@ -218,6 +224,18 @@ const Custommer = () => {
                                 className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
                               >
                                 {item.idUser}
+                              </th>
+                              <th
+                                scope='row'
+                                className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+                              >
+                                {item.bankName}
+                              </th>
+                              <th
+                                scope='row'
+                                className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+                              >
+                                {item.banKNumber}
                               </th>
                               <th
                                 scope='row'
