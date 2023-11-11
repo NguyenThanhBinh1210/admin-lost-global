@@ -2,8 +2,7 @@
 import moment from 'moment'
 import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { toast } from 'react-toastify'
-import { searchPayment, getPayment, deletePayment, AllHistory, UpdateHistory } from '~/apis/payment.api'
+import { AllHistory, UpdateHistory } from '~/apis/payment.api'
 import CreatePayment from '~/components/Modal/CreatePayment'
 // import { AppContext } from '~/contexts/app.context'
 
@@ -12,7 +11,6 @@ const PaymentHistory = () => {
 
   // const { profile } = useContext(AppContext)
   const [data, setData] = useState<any>([])
-  console.log(data)
   const [showComment, setShowComment] = useState<any | null>(null)
   const [isModalOpen, setModalOpen] = useState(false)
   const [isModalOpenCreate, setModalOpenCreate] = useState(false)
@@ -45,7 +43,7 @@ const PaymentHistory = () => {
   const currentDataWitdraw = arrayWithoutInfoRechargeMoney?.slice(startIndexWitdraw, endIndexWitdraw)
 
   const searchMutation = useMutation({
-    mutationFn: (title: string) => searchPayment(title)
+    mutationFn: (title: string) => AllHistory({ codeOder: title })
   })
 
   const updateMutation = useMutation({
@@ -80,7 +78,11 @@ const PaymentHistory = () => {
     searchMutation.mutate(search, {
       onSuccess: (data) => {
         setData(data.data)
-        setCurrentPage(1)
+        if (data.data[0].info) {
+          setType(0)
+        } else {
+          setType(1)
+        }
       },
       onError: (error: unknown) => {
         console.log(error)
@@ -101,15 +103,7 @@ const PaymentHistory = () => {
   return (
     <>
       <div className='flex justify-between mb-3 mobile:flex-col tablet:flex-col'>
-        <div className='mb-2 flex items-center'>
-          <span className='my-4 font-bold dark:text-white'>Số lượng giao dịch: {dataConfig?.data.length || 0}</span>
-          {/* <button
-            onClick={() => setModalOpenCreate(true)}
-            className='disabled:bg-opacity-70 ml-4 h-[40px] w-max text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-2xl text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-          >
-            Tạo tài khoản ngân hàng thanh toán
-          </button> */}
-        </div>
+        <div className='mb-2 flex items-center'></div>
         <div className='w-[50%] mobile:w-full'>
           <form onSubmit={(e) => handleSearch(e)}>
             <label htmlFor='default-search' className='mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white'>
@@ -176,8 +170,14 @@ const PaymentHistory = () => {
           <>
             <div className='flex justify-between'>
               <div>
-                {type === 0 && <h1 className='text-xl font-semibold mb-2'>Số giao dịch Nạp</h1>}
-                {type === 1 && <h1 className='text-xl font-semibold mb-2'>Số giao dịch Rút</h1>}
+                {type === 0 && (
+                  <h1 className='text-xl font-semibold mb-2'>Số giao dịch Nạp: {arrayWithInfoRechargeMoney.length}</h1>
+                )}
+                {type === 1 && (
+                  <h1 className='text-xl font-semibold mb-2'>
+                    Số giao dịch Rút: {arrayWithoutInfoRechargeMoney.length}
+                  </h1>
+                )}
               </div>
               <div className='flex gap-x-3 '>
                 <button
