@@ -44,7 +44,7 @@ const Header = () => {
         {profile?.isAdmin && <h2 style={{ margin: 'auto' }}>Admin</h2>}
         {profile?.isStaff && <h2 style={{ margin: 'auto' }}>Nhân viên</h2>}
       </div>
-      <div className='py-4 overflow-y-auto flex flex-col justify-between h-[90%]'>
+      <div className='py-4 overflow-y-auto flex flex-col justify-between h-[100%]'>
         <ul className='space-y-2'>
           {profile?.isAdmin && (
             <li>
@@ -157,6 +157,14 @@ const Header = () => {
                   className='flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg pl-4 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
                 >
                   <button>Khách hàng</button>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to='/chat'
+                  className='flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg pl-4 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
+                >
+                  <button>Chat</button>
                 </Link>
               </li>
             </>

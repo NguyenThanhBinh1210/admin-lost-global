@@ -279,9 +279,13 @@ const Custommer = () => {
                                 className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
                               >
                                 {item.prize ? (
-                                  <div className='bg-yellow-500 text-white flex justify-center rounded-md text-xs py-0.5 px-2'>Blocked</div>
+                                  <div className='bg-yellow-500 text-white flex justify-center rounded-md text-xs py-0.5 px-2'>
+                                    Blocked
+                                  </div>
                                 ) : (
-                                  <div className='bg-green-500 text-white flex justify-center rounded-md text-xs py-0.5 px-2'>Open</div>
+                                  <div className='bg-green-500 text-white flex justify-center rounded-md text-xs py-0.5 px-2'>
+                                    Open
+                                  </div>
                                 )}
                               </th>
                               <th
@@ -291,14 +295,18 @@ const Custommer = () => {
                                 <button
                                   type='button'
                                   onClick={() => handleOpenStaff(item._id)}
-                                  className={`text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-2 py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900 ${!item.prize && 'hidden'}`}
+                                  className={`text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-2 py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900 ${
+                                    !item.prize && 'hidden'
+                                  }`}
                                 >
                                   Mở
                                 </button>
                                 <button
                                   type='button'
                                   onClick={() => handleBlockStaff(item._id)}
-                                  className={`text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-2 py-1 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-900 ${item.prize && 'hidden'}`}
+                                  className={`text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-2 py-1 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-900 ${
+                                    item.prize && 'hidden'
+                                  }`}
                                 >
                                   Chặn
                                 </button>

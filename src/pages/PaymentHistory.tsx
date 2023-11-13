@@ -182,19 +182,21 @@ const PaymentHistory = () => {
               <div className='flex gap-x-3 '>
                 <button
                   onClick={() => setType(0)}
-                  className={`w-[100px] cursor-pointer h-[40px] rounded-lg ${type === 0
+                  className={`w-[100px] cursor-pointer h-[40px] rounded-lg ${
+                    type === 0
                       ? ' bg-blue-600 text-white '
                       : ' ring-1 ring-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white '
-                    }  flex transition-all items-center justify-center `}
+                  }  flex transition-all items-center justify-center `}
                 >
                   Lịch sử nạp
                 </button>
                 <button
                   onClick={() => setType(1)}
-                  className={`w-[100px] cursor-pointer h-[40px] rounded-lg ${type === 1
+                  className={`w-[100px] cursor-pointer h-[40px] rounded-lg ${
+                    type === 1
                       ? ' bg-blue-600 text-white '
                       : ' ring-1 ring-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white '
-                    }  flex transition-all items-center justify-center `}
+                  }  flex transition-all items-center justify-center `}
                 >
                   Lịch sử rút
                 </button>
@@ -276,8 +278,9 @@ const PaymentHistory = () => {
                                   className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
                                 >
                                   <span
-                                    className={` ${item?.status === 'pending' ? 'bg-yellow-500' : 'bg-green-500'
-                                      } text-white px-2 py-0.5 pb-1 text-xs rounded-md`}
+                                    className={` ${
+                                      item?.status === 'pending' ? 'bg-yellow-500' : 'bg-green-500'
+                                    } text-white px-2 py-0.5 pb-1 text-xs rounded-md`}
                                   >
                                     {item?.status}
                                   </span>
@@ -467,8 +470,9 @@ const PaymentHistory = () => {
                                   className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
                                 >
                                   <span
-                                    className={` ${item?.status === 'pending' ? 'bg-yellow-500' : 'bg-green-500'
-                                      } text-white px-2 py-0.5 pb-1 text-xs rounded-md`}
+                                    className={` ${
+                                      item?.status === 'pending' ? 'bg-yellow-500' : 'bg-green-500'
+                                    } text-white px-2 py-0.5 pb-1 text-xs rounded-md`}
                                   >
                                     {item?.status}
                                   </span>

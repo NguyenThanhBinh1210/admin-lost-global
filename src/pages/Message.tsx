@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
+import { getAllChat } from '~/apis/chat.api'
 import { deleteMessage, getAllMessage, searchMessage } from '~/apis/product.api'
 import Loading from '~/components/Loading/Loading'
 import CreateModal from '~/components/Modal/CreateModal'
@@ -15,12 +16,10 @@ const Messages = () => {
   const [data, setData] = useState<any>([])
   const [showComment, setShowComment] = useState()
   const [isModalOpen, setModalOpen] = useState(false)
-  const { data: dataConfig, isLoading: isLoadingOption } = useQuery({
+  const { isLoading: isLoadingOption } = useQuery({
     queryKey: ['message', 5],
     queryFn: () => {
-      return getAllMessage({
-        page: 1
-      })
+      return getAllChat({})
     },
     onSuccess: (data) => {
       setData(data.data.messages)
@@ -28,9 +27,6 @@ const Messages = () => {
     cacheTime: 60000
   })
   const { currentPage, totalPages, currentData, setCurrentPage } = usePagination(8, data)
-  const searchMutation = useMutation({
-    mutationFn: (title: string) => searchMessage(title)
-  })
   const deleteMutation = useMutation({
     mutationFn: (body: any) => deleteMessage(body),
     onError: () => {
@@ -54,15 +50,6 @@ const Messages = () => {
 
   const handleSearch = (e: any) => {
     e.preventDefault()
-    searchMutation.mutate(search, {
-      onSuccess: (data) => {
-        setData(data.data)
-        setCurrentPage(1)
-      },
-      onError: (error: unknown) => {
-        console.log(error)
-      }
-    })
   }
   return (
     <>
@@ -86,8 +73,12 @@ const Messages = () => {
                       STT
                     </th>
                     <th scope='col' className='px-6 py-3'>
-                      Email
+                      Name
                     </th>
+                    <th scope='col' className='px-6 py-3'>
+                      Status
+                    </th>
+
                     <th scope='col' className='px-6 py-3'>
                       Hành động
                     </th>
@@ -111,7 +102,13 @@ const Messages = () => {
                             scope='row'
                             className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
                           >
-                            {item?.email}
+                            {item?.userName}
+                          </th>
+                          <th
+                            scope='row'
+                            className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+                          >
+                            {item?.status ? <div>Đọc rồi</div> : <div>Chưa đọc</div>}
                           </th>
                           <th
                             scope='row'

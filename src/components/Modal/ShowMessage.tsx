@@ -1,4 +1,10 @@
-import React, { useRef } from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useMutation, useQueryClient } from 'react-query'
+import { createMessage } from '~/apis/chat.api'
+import { AppContext } from '~/contexts/app.context'
+import { generateRandomOrderCode } from '~/utils/utils'
 
 const ShowMessage = ({ isOpen, onClose, data }: any) => {
   const modalRef = useRef<HTMLDivElement>(null)
@@ -8,7 +14,47 @@ const ShowMessage = ({ isOpen, onClose, data }: any) => {
       onClose()
     }
   }
+  const [valueInput, setValueInput] = useState<string>('')
+  const { profile } = useContext(AppContext)
+  // const queryClient = useQueryClient()
+  const chatMutation = useMutation({
+    mutationFn: (body: any) => {
+      return createMessage(body)
+    }
+  })
+  const [contentMessage, setContentMessage] = useState<any>(data?.content)
+  useEffect(() => {
+    setContentMessage(data?.content)
+  }, [data?.content])
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+    if (valueInput !== '') {
+      const newData = {
+        message: valueInput,
+        sender: data?.sender
+      }
+      const dataState = [
+        ...contentMessage,
+        {
+          _id: generateRandomOrderCode(10),
+          userId: profile._id,
+          message: valueInput
+        }
+      ]
+      // console.log(newData)
+      setContentMessage(dataState)
+      setValueInput('')
+      chatMutation.mutate(newData)
+    }
+  }
+  const messagesContainerRef = useRef<any | null>(null)
 
+  const scrollToBottom = () => {
+    messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight
+  }
+  useEffect(() => {
+    scrollToBottom()
+  }, [contentMessage])
   return (
     <div
       id='authentication-modal'
@@ -48,22 +94,37 @@ const ShowMessage = ({ isOpen, onClose, data }: any) => {
             <span className='sr-only'>Close modal</span>
           </button>
           <div className='px-6 py-6 lg:px-8'>
-            <h3 className='mb-4 text-xl font-medium text-gray-900 dark:text-white'>Xem chi tiết nội dung</h3>
-            <form className='space-y-6' action='#' autoComplete='false'>
+            <h3 className='mb-4 text-xl font-medium text-gray-900 dark:text-white'>Nhắn tin</h3>
+            <div className='space-y-6'>
               <div>
-                <label htmlFor='title' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
-                  Email
-                </label>
-                <input
-                  type='text'
-                  name='title'
-                  id='title'
-                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                  placeholder='Tiêu đề'
-                  value={data?.email}
-                />
+                <div
+                  ref={messagesContainerRef}
+                  className='border rounded-md p-2 min-h-[300px] h-[300px] overflow-x-auto flex items-end'
+                >
+                  <div className='h-max mt-auto w-full'>
+                    {contentMessage?.map((item: any) => (
+                      <div
+                        key={item._id}
+                        className={` p-2 mb-2 rounded-r-xl w-max max-w-[70%] ${
+                          item.userId === data.sender ? 'rounded-r-xl bg-gray-100' : 'rounded-l-xl ml-auto bg-blue-100'
+                        }  rounded-t-xl`}
+                      >
+                        {item.message}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <form onSubmit={handleSubmit} className='h-[30px] flex w-full rounded-md border mt-1'>
+                  <input
+                    value={valueInput}
+                    onChange={(e) => setValueInput(e.target.value)}
+                    className='w-full rounded-l-md border px-3'
+                    type='text'
+                  />
+                  <button className='w-[50px] bg-blue-500 text-white ring-1 ring-blue-500 rounded-r-md'>Gửi</button>
+                </form>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>

@@ -16,6 +16,7 @@ import Brand from './pages/Brand'
 import Payment from './pages/Payment'
 import Custommer from './pages/Custommer'
 import PaymentHistory from './pages/PaymentHistory'
+import Chat from './pages/Chat'
 
 function ProtecedRoute() {
   const { isAuthenticated } = React.useContext(AppContext)
@@ -140,6 +141,14 @@ const useRouteElements = () => {
           element: (
             <AdminLayout title='Lịch sử giao dịch'>
               <PaymentHistory />
+            </AdminLayout>
+          )
+        },
+        {
+          path: '/chat',
+          element: (
+            <AdminLayout title='Chat'>
+              <Chat />
             </AdminLayout>
           )
         }
