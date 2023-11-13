@@ -1,52 +1,29 @@
-import { useContext, useState } from 'react'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from 'react'
+import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import { deleteComment, getAllComment, getAllContact, getAllStaff, searchComment } from '~/apis/product.api'
-import CreateModal from '~/components/Modal/CreateModal'
-import { AppContext } from '~/contexts/app.context'
+
+import { getAllInOne } from '~/apis/admin.api'
+import { FormatNumber } from '~/hooks/useFormatNumber'
 
 const Dashboard = () => {
-  // return (
-  //   <></>
-  // )
-  const { profile } = useContext(AppContext)
   const [data, setData] = useState<any>([])
-  const { data: dataConfig, isLoading: isLoadingOption } = useQuery({
-    queryKey: ['comments', 2],
+  useQuery({
+    queryKey: ['get-all', 2],
     queryFn: () => {
-      return getAllComment({
-        page: 1
-      })
+      return getAllInOne()
     },
     onSuccess: (data) => {
-      setData(data.data.comments)
+      setData(data.data.data)
     },
     cacheTime: 120000
   })
-  const { data: dataContact, isLoading: isLoadingOptionCT } = useQuery({
-    queryKey: ['contacts', 2],
-    queryFn: () => {
-      return getAllContact({
-        page: 1
-      })
-    },
-    onSuccess: (data) => {
-      setData(data.data.contacts)
-    },
-    cacheTime: 120000
-  })
-  const { data: dataStaff, isLoading: isLoadingOptionStaff } = useQuery('users', () => getAllStaff(), {
-    onSuccess: (data) => {
-      setData(data.data.users)
-    },
-    cacheTime: 120000
-  })
+
   const dataType = [
     {
       id: 1,
       name: 'Total Orders',
-      data: '1000',
+      data: data?.coutOrder,
       img: (
         <svg
           aria-hidden='true'
@@ -62,12 +39,12 @@ const Dashboard = () => {
           />
         </svg>
       ),
-      path: "/order"
+      path: '/order'
     },
     {
       id: 2,
       name: 'Total Users',
-      data: dataStaff?.data.count,
+      data: data?.countUser,
       img: (
         <svg
           aria-hidden='true'
@@ -79,12 +56,12 @@ const Dashboard = () => {
           <path fillRule='evenodd' d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z' clipRule='evenodd' />
         </svg>
       ),
-      path: "/custommer"
+      path: '/custommer'
     },
     {
       id: 3,
       name: 'Total Recharge',
-      data: dataStaff?.data.count,
+      data: `$${FormatNumber(data?.totalRecharge)}`,
       img: (
         <svg width={40} height={40} viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
           <g clipPath='url(#clip0_291_1667)'>
@@ -110,12 +87,12 @@ const Dashboard = () => {
           </defs>
         </svg>
       ),
-      path: "/payment-history"
+      path: '/payment-history'
     },
     {
       id: 4,
       name: 'Total Withdrawal',
-      data: dataStaff?.data.count,
+      data: `$${FormatNumber(data?.totalWithdrawal)}`,
       img: (
         <svg width='70' height='70' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
           <path
@@ -124,8 +101,7 @@ const Dashboard = () => {
           />
         </svg>
       ),
-      path: "/payment-history"
-
+      path: '/payment-history'
     }
   ]
   return (
@@ -143,7 +119,6 @@ const Dashboard = () => {
             </div>
             <div className='h-[30px] hover:bg-gray-100 cursor-pointer absolute bottom-0 left-0 w-full mt-auto transition-all bg-slate-100 col-span-3'>
               <Link className='w-full h-full flex items-center justify-center' to={item.path}>
-
                 <span className='cursor-pointer'>Xem thêm</span>
               </Link>
             </div>
