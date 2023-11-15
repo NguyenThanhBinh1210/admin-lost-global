@@ -1,14 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { useMutation, useQueryClient } from 'react-query'
-import { createMessage } from '~/apis/chat.api'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { createMessage, getMessages } from '~/apis/chat.api'
 import { AppContext } from '~/contexts/app.context'
 import { generateRandomOrderCode } from '~/utils/utils'
+// eslint-disable-next-line import/no-named-as-default
+import io from 'socket.io-client'
+const serverUrl = 'https://lostglobal.onrender.com'
 
 const ShowMessage = ({ isOpen, onClose, data }: any) => {
   const modalRef = useRef<HTMLDivElement>(null)
+  const [contentMessage, setContentMessage] = useState<any>()
 
+  const { data: dataMess } = useQuery({
+    queryKey: ['message-chat', data],
+    queryFn: () => {
+      return getMessages({ sender: data })
+    },
+    onSuccess: (data) => {
+      setContentMessage(data.data.getMessage.content)
+    },
+    cacheTime: 60000
+  })
   const handleModalClick = (e: React.MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       onClose()
@@ -20,18 +34,19 @@ const ShowMessage = ({ isOpen, onClose, data }: any) => {
   const chatMutation = useMutation({
     mutationFn: (body: any) => {
       return createMessage(body)
+    },
+    onSuccess: () => {
+      const socket = io(serverUrl)
+      socket.emit('sendMessUser')
     }
   })
-  const [contentMessage, setContentMessage] = useState<any>(data?.content)
-  useEffect(() => {
-    setContentMessage(data?.content)
-  }, [data?.content])
+
   const handleSubmit = (e: any) => {
     e.preventDefault()
     if (valueInput !== '') {
       const newData = {
         message: valueInput,
-        sender: data?.sender
+        sender: dataMess?.data.getMessage?.sender
       }
       const dataState = [
         ...contentMessage,
@@ -55,15 +70,22 @@ const ShowMessage = ({ isOpen, onClose, data }: any) => {
   useEffect(() => {
     scrollToBottom()
   }, [contentMessage])
+  const queryClient = useQueryClient()
+  useEffect(() => {
+    const socket = io(serverUrl)
+    socket.on('receiveMessAdmin', (data) => {
+      console.log(data);
+      queryClient.invalidateQueries({ queryKey: ['message-chat', data] })
+    })
+  }, [])
   return (
     <div
       id='authentication-modal'
       tabIndex={-1}
       aria-hidden='true'
       onClick={handleModalClick}
-      className={` ${
-        isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-      } fixed bg-[#02020246] dark:bg-[#ffffff46] top-0 left-0 right-0 z-50 w-[100vw] p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[100vh] transition-all`}
+      className={` ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        } fixed bg-[#02020246] dark:bg-[#ffffff46] top-0 left-0 right-0 z-50 w-[100vw] p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[100vh] transition-all`}
     >
       <div
         ref={modalRef}
@@ -105,9 +127,10 @@ const ShowMessage = ({ isOpen, onClose, data }: any) => {
                     {contentMessage?.map((item: any) => (
                       <div
                         key={item._id}
-                        className={` p-2 mb-2 rounded-r-xl w-max max-w-[70%] ${
-                          item.userId === data.sender ? 'rounded-r-xl bg-gray-100' : 'rounded-l-xl ml-auto bg-blue-100'
-                        }  rounded-t-xl`}
+                        className={` p-2 mb-2 rounded-r-xl w-max max-w-[70%] ${item.userId === dataMess?.data.getMessage.sender
+                          ? 'rounded-r-xl bg-gray-100'
+                          : 'rounded-l-xl ml-auto bg-blue-100'
+                          }  rounded-t-xl`}
                       >
                         {item.message}
                       </div>
