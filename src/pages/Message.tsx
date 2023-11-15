@@ -3,14 +3,12 @@ import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
 import { getAllChat } from '~/apis/chat.api'
-import { deleteMessage, getAllMessage, searchMessage } from '~/apis/product.api'
+import { deleteMessage } from '~/apis/product.api'
 import Loading from '~/components/Loading/Loading'
-import CreateModal from '~/components/Modal/CreateModal'
 import ShowMessage from '~/components/Modal/ShowMessage'
 import Paginate from '~/components/Pagination/Paginate'
 import SearchHeader from '~/components/Search/Search'
 import usePagination from '~/hooks/usePagination'
-
 const Messages = () => {
   const queryClient = useQueryClient()
   const [data, setData] = useState<any>([])
@@ -108,7 +106,15 @@ const Messages = () => {
                             scope='row'
                             className='px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white'
                           >
-                            {item?.status ? <div>Đọc rồi</div> : <div>Chưa đọc</div>}
+                            {item?.status ? (
+                              <div className='text-xs w-max bg-green-400 text-white flex justify-center px-2 py-0.5 rounded-lg'>
+                                Seen
+                              </div>
+                            ) : (
+                              <div className='text-xs w-max bg-yellow-400 text-white flex justify-center px-2 py-0.5 rounded-lg'>
+                                Unsend
+                              </div>
+                            )}
                           </th>
                           <th
                             scope='row'
@@ -122,7 +128,7 @@ const Messages = () => {
                               }}
                               className='text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-2 py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900'
                             >
-                              Xem
+                              Chat
                             </button>
                             <button
                               type='button'
