@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
-import { getAllChat } from '~/apis/chat.api'
+import { getAllChat, getMessages } from '~/apis/chat.api'
 import { deleteMessage, getAllMessage, searchMessage } from '~/apis/product.api'
 import Loading from '~/components/Loading/Loading'
 import CreateModal from '~/components/Modal/CreateModal'
@@ -37,6 +37,19 @@ const Messages = () => {
       queryClient.invalidateQueries({ queryKey: ['message', 5] })
     }
   })
+  const getMessageMutation = useMutation({
+    mutationFn: (body: any) => getMessages(body),
+    onError: () => {
+      toast.warn('Error')
+    },
+    onSuccess: (data) => {
+      setShowComment(data.data.getMessage)
+      setModalOpen(true)
+    }
+  })
+  const handleGetMessage = (id: string) => {
+    getMessageMutation.mutate({ sender: id })
+  }
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page)
@@ -117,8 +130,7 @@ const Messages = () => {
                             <button
                               type='button'
                               onClick={() => {
-                                setShowComment(item)
-                                setModalOpen(true)
+                                handleGetMessage(item.sender)
                               }}
                               className='text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-2 py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900'
                             >
